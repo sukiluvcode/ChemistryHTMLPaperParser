@@ -1,0 +1,831 @@
+<head>
+ <title>
+  Computational Study of ZIF-8 and ZIF-67 Performance for Separation of Gas Mixtures
+ </title>
+ <style>
+  head {
+  width: 85%;
+  margin:auto auto;
+}
+
+body {
+  width: 85%;
+  margin:auto auto;
+}
+
+div {
+  width: 100%;
+  margin:auto auto;
+}
+
+p {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.polymer {
+background-color: lightblue;
+color: black;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+
+caption {
+  margin-bottom: 0.5em;
+}
+
+tbody td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+  font-size: 80%;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+tfoot td, th{
+  border: none;
+  text-align: left;
+  padding: 8px;
+  font-size: 70%;
+  line-height: 100%;
+}
+
+tfoot tr {
+  background-color: #ffffff;
+}
+ </style>
+ <meta content="width=device-width, initial-scale=1" name="viewport"/>
+ <h1>
+  Computational Study of ZIF-8 and ZIF-67 Performance for Separation of Gas Mixtures
+ </h1>
+ <p>
+  doi:
+  <a href="https://www.doi.org/10.1021/acs.jpcc.7b05700">
+   10.1021/acs.jpcc.7b05700
+  </a>
+ </p>
+</head>
+<body>
+ <div id="results">
+ </div>
+ <hr/>
+ <div id="abstract">
+  <h2>
+   Abstract
+  </h2>
+  <p>
+   High Resolution ImageDownload MS PowerPoint SlideZIF-67, a modification of ZIF-8 framework through Zn substitution with Co, is tested for the first time for the separation of ethylene/ethane mixture using molecular simulations. The framework consists of cages connected with narrow apertures, which exhibit flexibility through a swelling motion, allowing for relatively large penetrants to diffuse. ZIF-67 demonstrates an enhanced separation for the specific mixture. Various computational techniques are employed (conventional molecular dynamics and Monte Carlo simulations, umbrella sampling, and Widom particle insertion), and the separation mechanism is investigated in terms of sorption and diffusion, for both ZIF-8 and ZIF-67. The stiffer bonding of Co with the adjacent N atoms results in a tighter structure and an aperture with smaller size and lower swelling amplitude than ZIF-8. The diffusion results show a clear dependency of the kinetic-driven separation on the aperture flexibility of the different frameworks. The diffusivities of different sized molecules (from He to n-butane) are simulated in both ZIF-8 and ZIF-67 frameworks, and the molecular size is correlated with the aperture's response variations. A generalized method based on these results is developed which helps the understanding of the sieving mechanism as a function of the penetrant size and of the aperture size and flexibility. This approach provides an efficient screening of modifiable frameworks toward more efficient separations.
+  </p>
+ </div>
+ <div id="sections">
+  <h2>
+   1 Introduction
+  </h2>
+  <p>
+   Separation of hydrocarbon mixtures is key to the petrochemical industry. (1) Distillation is the most commonly used method for such separations, but it can be energy demanding, especially for separations of components of similar volatility. Absorption is another common method but it involves the cooling and heating of solvent for each process cycle. (2) The use of microporous media in the form of membranes, which can adsorb gas molecules in their pores, is a relatively new, promising approach that has attracted much attention. Olefin/paraffin separations that provide important feedstock to industrial products can take advantage of the much lower energy use in membrane separations compared to these other processes. For example, propylene/propane separation using a membrane can be 90% less energy demanding than distillation. (1, 3) Nevertheless, there are various difficulties that hold membranes for hydrocarbon separations from going from a mere scientific concept to a product of mass industrial use: the majority of the membranes show insufficient scalability. (1) Moreover, the only membranes used for large-scale gas separations are the purely polymeric ones, but they exhibit very low hydrocarbon separation performance and compromised stability. (4)
+  </p>
+  <p>
+   ZIFs consist of a subfamily of metal-organic frameworks (MOFs), which are studied extensively for the development of advanced membranes. (5) They are appealing because of the mild conditions of their synthesis (they can be synthesized at room temperature, compared, for example with zeolite synthesis at high temperatures, and often without templating involvement or structure directing agents) and they are highly tunable offering multiple design possibilities for different separations. (6) ZIF-8 is one of the most studied ZIFs, and demonstrates a flexible framework, which allows the diffusion of molecules larger than the aperture that connects the cages. (7-9) The mechanism is not yet fully understood, although recent experiments have attempted to shed light on the factors that govern the aperture motion. (10, 11) To this end, molecular simulations can provide useful insight on the gas diffusion, (12-16) surpass the experimental limitations, and be a powerful tool for investigating the gate-opening effect (17) and the aperture flexibility. (18)
+  </p>
+  <p>
+   The appeal of the ZIF-8 framework is reflected in the attention that it has attracted: Based on data gathered from Citation Index, up to 2015 it made up for approximately 65% of the ZIF research. Little has changed during the last two years: the vast majority of the ongoing ZIF research is still on ZIF-8 (65% at the end of April 2017), although its performance is limited to propylene/propane separation. (19, 20) A metal-replacement modification, namely ZIF-67, 21 seems to have an increased share of the research interest (going from 6% in 2015 to 11% in April 2017). ZIF-67 has a smaller aperture and a more rigid framework than ZIF-8, which makes it ideal for small gas molecule separation. (22-24) However, its separation efficiency remains understudied and besides experiments and simulations on propane and propylene diffusion, which place ZIF-67 on the top of the candidates for the propylene/propane separation, (23, 24) not much has been reported so far, to the authors' knowledge.
+  </p>
+  <p>
+   In this work, both ZIF-8 and ZIF-67 frameworks are extensively studied in terms of their separation efficiency. The response of the framework to the presence of diffusing molecules of various sizes from He (2.66 Å) up to n-butane (4.16 Å) is analyzed, providing information on how bulky molecules pass through the apertures that connect the framework cages. Based on a scale that combines the penetrants size with the aperture response, a generalized method is proposed, enabling the direct comparison of different metal substitute frameworks in terms of separation efficiency over a wide molecular size range. The results are presented in the general context of the separation improvement for various MOF candidates with kinetic-driven (3) and sorption-driven selectivity. (4) Moreover, from the set of studied gases we investigate extensively ethylene and ethane. Their separation is important because ethylene is a feedstock for the production of many chemical products such as polymers, but their kinetic separation is poorly studied in ZIF-8, since their small size makes size selectivity difficult. The comparison reveals a satisfactory improvement in ZIF-67 and underscores the merits of metal replacement. Additionally, the separation is investigated in terms of the sorption affinity of the two gases with ZIF-8 and ZIF-67 frameworks, to elucidate all possible selectivity mechanisms. In this case, Monte Carlo simulations and Widom test particle insertion are employed for the calculation of adsorption isotherms and isosteric heats of adsorption, respectively.
+  </p>
+  <h2>
+   2 Simulation Methodology
+  </h2>
+  <h2>
+   2.1 Computational Reconstruction of ZIF Unit Cells
+  </h2>
+  <p>
+   The construction of ZIF-8 and ZIF-67 unit cells was based on experiments carried out by Park et al. (5) and Banerjee et al. (21) The basic building unit consists of tetrahedral formations around a central metal atom (Figure 1), which can be either Zn or Co, for the case of ZIF-8 or ZIF-67, respectively.
+  </p>
+  <p>
+   In all simulations, a 2 × 2 × 2 supercell shown in Figure 2 was used to improve the statistics.
+  </p>
+  <h2>
+   2.2 Force Field for ZIF Framework and Guest Species
+  </h2>
+  <p>
+   The force fields (FF) describing the interactions for ZIF-8 and ZIF-67 frameworks were developed recently. (24, 25) Both force fields have demonstrated excellent performance on reproducing structural X-ray diffraction (XRD) measurements and predicting diffusivities for a wide range of gases. The FF for ZIF-67 is the only one reported in the literature, to our knowledge. The interaction model consists of bond stretching (eq 1), bond angle bending (eq 2), and torsional angle distortion (eq 3) for bonded intramolecular interactions and Lennard-Jones (LJ) and electrostatic terms for nonbonded intra- and intermolecular interactions (eq 4), according to the expressions:(1)(2)(3)(4)
+  </p>
+  <p>
+   The handling of intramolecular nonbonded framework interactions was carried out through the scaled 1-4 approach: interactions between atoms separated by three bonds were subject to 0.5 scaling of the Coulombic term and 0.83 of the van der Waals terms. Parameter values for the force field of the two frameworks can be found in Table S1-S5, in the Supporting Information (ESI).
+  </p>
+  <p>
+   In addition to ethane and ethylene, simulations were carried out for several other guest molecules using literature FFs. For ethane, propane and n-butane the all-atom TraPPE-UA FF was used. (26) This FF accounts for the flexibility of the angles, while bonds are considered fixed and atoms have zero charge. For He, the Talu and Myers model was employed, in which the gas is described as a LJ sphere. (27) The EPM2 FF was adopted for the CO2 guest molecule, which consists of a three-point charge molecule with fixed bonds of 1.16 Å. (28)
+  </p>
+  <p>
+   The Lorentz-Berthelot combining rules were used for the nonbonded, cross-interactions between guest and host (ZIF) atoms, as well as between different framework atoms. The van der Waals interactions were subject to a 13 Å cutoff. Long-range electrostatic interactions were calculated with the particle mesh Ewald method (PME).
+  </p>
+  <h2>
+   2.3 Methodology for the Calculation of Diffusivities
+  </h2>
+  <h2>
+   2.3.1 Corrected Diffusivities
+  </h2>
+  <p>
+   The diffusion inside nanoporous solids has been studied extensively using different experimental techniques, such as frequency response methods, pulsed-field gradient NMR, and quasi-elastic neutron scattering. (29) Different types of diffusivities are defined: self-diffusivity is the most commonly calculated in molecular simulations, because of the convenience of an ensemble average over the mean square displacement (MSD) of guest species of concentration c in the adsorbent:(5)where N is the number of guest molecules and r⃗i(t) is the position of molecule i at time t. Transport diffusivity is one of the most commonly measured experimentally for quantifying the propagation of diffusing species and depends on the number of diffusing molecules through the following expression:(6)
+  </p>
+  <p>
+   In eq 6, the second term on the right-hand side is the thermodynamic factor and involves the derivative of fugacity of the bulk phase (f) with respect to the concentration c of the adsorbed phase. Finally, D0(c) is the so-called corrected diffusivity, which describes the displacement of the center of mass of the swarm of molecules propagating in the pores of the solid.
+  </p>
+  <p>
+   In the above expressions, all diffusivities depend on the concentration or the guest loading. The reader is referred to the work of Skoulidas and Sholl (30) around the subtle but critical differences between the measured and computed diffusivities, the approximations made in relating macroscopic and microscopic diffusion measurements, and the assumptions used in permeation models.
+  </p>
+  <p>
+   In this work, corrected diffusivities were calculated with the help of equilibrium molecular dynamics (EMD) simulations for different molecules at varying concentration in ZIF-8 and ZIF-67. D0 was calculated through a procedure, similar to the conventional trajectory analysis used for the Ds calculation, which was proposed by Theodorou et al. (31) and involves an ensemble average over the center of mass of the guest species:(7)
+  </p>
+  <p>
+   The displacement of the center of mass is subject to larger uncertainty than the mean square displacement (MSD) of the individual molecules; thus, much larger simulation times are needed for the accurate calculation of D0 compared to the Ds. Multiple trajectories were generated, with simulation times ranging from 30 ns for the fast diffusing molecules (He and CO2) up to 100 ns for the slow ones (ethylene, ethane, propylene, propane, and n-butane), and they were analyzed with the help of eq 7. Calculations were performed at different temperatures for the calculation of the activation energy of diffusion, ΔH, through the Arrhenius expression:(8)where D0′ is the maximum diffusivity at infinite temperature and R is the gas constant. Dt was calculated for ethane and ethylene in ZIF-8, using eq 6, so that comparison with literature results can be performed. This calculation involves the estimation of the thermodynamic factor, which can be extracted from the adsorption isotherm of the species, as explained in section 2.4.
+  </p>
+  <h2>
+   2.3.2 Slow Diffusing Species
+  </h2>
+  <p>
+   Very slow diffusing species, which for the case of the ZIF framework refers to propane and larger molecules, with diffusivities lower than approximately 10-13-10-14 m2/s, pose a large computational cost, demand numerous, long runs and are subject to high uncertainty. In previous studies, D0 was calculated at elevated temperatures, and results were extrapolated at the desired temperature. (24) In the present work, in which n-butane was selected as a representative slow diffusing guest, the challenge of slow diffusion was approached by a less conventional molecular simulation. Diffusion of molecules in solids with cavities interconnected through narrow apertures or canals can be modeled by a hopping motion between cavities. Each successful hop is regarded as a rare event amidst the multitude of unsuccessful bounces on the cage walls. Various techniques have been developed that overcome the computational difficulties of slow-diffusing species and provide accurate results, such as the Ruiz-Montero et al. approach, (32) the path sampling method, (33) and the temperature-accelerated dynamics, (34) to name a few. In this work, the transition state theory (TST) was employed, which involves the calculation of a rate constant between states A and B. In our case, states A and B represent the two framework cages between which the hop takes place. There are numerous approaches reported in the literature for handling the rate calculation, from which we chose to follow the energy profile mapping along the diffusion path, as has been used for benzene in silicalite-1 by Forester and Smith (35) and Kolokathis et al. (36) and for various gases in ZIF-8 by Verploegh et al. (37) This is usually achieved by the umbrella sampling technique. (38) Zheng et al. reported recently an alternate approach to extract the energy profile from DFT calculations. (39) Last, Chmelik and Kärger analyzed experimentally measured transport and Stefan-Maxwell diffusivities of various guest molecules in ZIF-8 with a TST theory-based model and showed a profound agreement on the concentration dependency of diffusivities. (40)
+  </p>
+  <p>
+   Umbrella sampling is a biased sampling method, involving a reaction coordinate (RC) connecting the two cages related to the jump under study. A molecule will succeed to hop from one cage to the other if it overcomes the energy barrier imposed by the narrow aperture. A schematic representation of the method is shown in Figure 3.
+  </p>
+  <p>
+   The RC is split into sampling windows along its axis and each window samples only a small area. In order to achieve this, the molecule is restrained by a harmonic potential applied to its center of mass. Figure S1 shows in more detail the harmonic spring restraining a molecule. The molecule can move in a 3D region, which is called umbrella and whose size depends on the constant of the spring constraining its motion. The umbrellas are sampled individually and are combined through a post-process procedure described later, to give the free energy profile. The RC in the case of ZIF framework overlaps with the diagonals crossing the unit cell. A depiction of the umbrellas along the RC (crystallographic direction: [111]) is shown in Figure 3. Higher spring constants shape thinner scanning areas and a denser sampling is required, meaning additional umbrellas. On the other hand, more loose springs result in poor sampling close to high-energy repulsion areas, such as near the aperture. The spring constant must be chosen to ensure umbrella overlapping, otherwise inappropriate energy profiles will be generated. Figure S2 in the ESI shows examples of sufficient and nonsufficient umbrella sampling and the resulting free energy profiles, in the case of an n-butane molecule in ZIF-8 and in ZIF-67.
+  </p>
+  <p>
+   Thirty umbrellas were used for the calculations of the n-butane diffusion in ZIF-8 and in ZIF-67, evenly spaced in a range of 14 Å, along the RC crossing the aperture. The constant of the spring was set to 25 000 kJ/nm2. The velocity-Verlet integration algorithm was used in the MD simulations in the NVT ensemble with a time step of 1 fs. The sequence of the umbrella simulations was combined and the free energy profile was extracted with the use of a weighted histogram analysis method (WHAM). The method analyzes a set of umbrella samplings to extract potentials of mean force (PMFs), (41) which are representative of the transition energetics in the solid. More details can be found in the relevant paper by Hub et al.. who developed a new WHAM implementation with a protocol for the computation of statistical errors with different bootstrap techniques. (42) Their implementation was used here.
+  </p>
+  <p>
+   In this work, we adopted the "Bennet-Chandler" approach (43) for the diffusion of SF6 in silicalite. The diffusivity is estimated by the total hoping rate, kTST, of a molecule undergoing successful jumps through the exiting apertures of a particular cage to the adjacent cages: (37)(9)where n depends on the dimensionality of diffusion and takes values of 1, 2, or 3 (for the case of ZIF-8, n = 3), l is the distance between energy minima, and napertures is the number of apertures (8 in ZIF-8). kA→B is the average hopping rate between two cages, the starting one A and the next one, B:(10)where m is the mass of the molecule under investigation, λ is the reaction coordinate and can be regarded as a function of the Cartesian coordinates, and P(λ*) is the probability of finding the molecule in the dividing surface, which is an orthogonal plane at λ = λ* vertical to the reaction axis, close to the energy barrier (or where free energy is maximized), which in our case corresponds to the aperture. The probability P(λ*) depends on the free energy barrier (as calculated by profiles such as in Figure S2) and is obtained from(11)where F stands for the free energy.
+  </p>
+  <p>
+   The hopping rate is regarded as an ideal value where all molecules with sufficient kinetic energy cross the barrier. This does not consider failure to equilibrate to the new state (successful entrance to the cage B), since the molecule may fail to thermalize in the destination state and either recross the aperture and hop into the initial cage, A, or move to another cage. For this reason, a dynamical correction (dc) (44) commonly involved in such calculations (36, 45) is applied, and the dynamically corrected hopping rate is expressed through(12)where κ is the correction factor. Description of the calculation of the dc in this work can be found in the ESI.
+  </p>
+  <p>
+   The umbrella samplings in this work were carried out for a single molecule. This results in zero loading diffusivities. Successful implementation of the loading dependency of TST diffusivities has been reported in recent works. (37, 45, 46) Given that D0 and Ds variations with loading in the systems under investigation are mostly confined within the same order of magnitude, we consider this level of accuracy for the n-butane satisfactory for the subsequent analysis presented in section 3.2. The energy profile extracted from n-butane umbrella sampling is plotted in Figure S2 of the ESI material.
+  </p>
+  <p>
+   For all EMD and umbrella sampling simulations, the GROMACS open-source molecular simulation platform (version 4.6.5) (47) was employed. In the case of the umbrella simulations, the pull code of GROMACS was used. More details on our implementation of the pull code can be found in the ESI text. The process of the MD trajectories for the calculation of D0 through eq 7 and, the process of the transmission trajectories and the calculation of the correction factor, as described in the ESI, were carried out with FORTRAN codes that we developed in house. The assignment of the force-field types and parameters to each atom of the system requires the construction of a file that, in the case of a complex chemical system such as the ZIF-8/67 supercells, requires an automated procedure. For this reason, we used the g_x2top routine of GROMACS to produce the necessary force field topologies for our calculations.
+  </p>
+  <h2>
+   2.4 Adsorption Properties Calculation
+  </h2>
+  <h2>
+   2.4.1 Monte Carlo Simulations
+  </h2>
+  <p>
+   Adsorption isotherms are needed for the estimation of transport diffusivities based on eq 6. The adsorption of ethylene and ethane in both ZIF-8 and ZIF-67 frameworks was calculated based on MC simulations in the grand canonical (μ,V,T) ensemble. The interaction cutoff was set to 12 Å, and tail corrections were applied for the LJ interactions. A total of 1 × 106 MC equilibration steps were succeeded by 5 × 106 MC steps for every pressure, at a given temperature, and the average loading in the 2 × 2 × 2 ZIF box was calculated.
+  </p>
+  <p>
+   The Cassandra code (version 1.2) was used for the MC computations. (48) Molecular insertions in Cassandra code were performed using Configurational Bias MC according to which a molecule is divided in fragments that are inserted gradually in the ZIF framework. Different positions, orientations, and molecular conformation are attempted in this respect. The input chemical potential in the calculations, μ′, is shifted relatively to the chemical potential, μ, of the sorbed molecules that are in equilibrium with the gas. μ′ is given from the expression(13)where Qrot+int is the partition function over orientational (rotation) and internal (angle and torsion) degrees of freedom, Zint is the configurational partition function of a molecular conformation over internal degrees of freedom, is the configurational partition function over degrees of freedom internal to each fragment i, and Ωdih = (2π)Nfrag-1. Input values for μ′ were related to the actual pressure, through additional GCMC runs: a simulation of a cell containing the pure gas at the desired chemical potential and temperature was carried out and the average pressure was calculated. More details on the insertion method of Cassandra and the μ′ correlation with the partition function for the rotational and internal degrees of freedom can be found in the literature. (49)
+  </p>
+  <h2>
+   2.4.2 Widom Test Particle Insertion Method
+  </h2>
+  <p>
+   Although adsorption isotherms can indicate whether a solid demonstrates a sorption selection mechanism between different species, they work better as a measure of the general adsorption capacity of a solid. Often, the linear part of an isotherm, which reflects the guest-host interactions and whose slope provides the Henry constant, is selected as means of speculating on sorption selectivity. From the computational standpoint, this can be rather risky because the low-pressure region in MC calculations involves a smaller sample of tested insertions and is subject to higher statistical uncertainty. For the evaluation of trustful slopes, an improvement of the statistics is desirable, which can be obtained by using a larger simulation box (3 × 3 × 3). To avoid the additional intricacies and the computational cost involved in such a solution, another kind of computation was preferred. The isosteric heat of adsorption was adopted as an indicator of the interaction between guest molecules and the solid walls. Isosteric heats for nonpolar molecules are directly correlated to the guest's LJ interactions with the solid, (50) which create a potential profile of preferable "wells" near the walls (sorption sites). This goes along with recent findings, which suggest that interactions in ZIF-8 are dominated by nonelectrostatic energies. (7) Moreover, isosteric heats of adsorption can go in par with the energy barrier of the diffusion mechanism provided by our activation energies of diffusion, for a more sensible and direct comparison between adsorption and diffusion.
+  </p>
+  <p>
+   The isosteric heat of adsorption of ethane and ethylene was calculated by applying the Widom test particle insertion method, (51) which has been employed successfully in the past for the sorption of gas molecules in ZIF-8. (16) A single guest molecule is inserted in the ZIF box, at different positions and for a large number of conformations of the framework, which were generated by MD simulations beforehand. In this work, the isochoric-isothermal (N,V,T) ensemble was employed, where the excess chemical potential, μiex, of component i is calculated according to the expression (52, 53)(14)where β = 1/kBT and Utestinter is the intermolecular energy of the test particle when it is inserted in the system. The brackets indicate averaging over all ZIF framework configurations and spatial averaging over all of the degrees of freedom of the inserted guest molecule (translational and rotational).
+  </p>
+  <p>
+   In this work, 1000 frames were generated by MD simulations on the empty ZIF-8 and ZIF-67 supercell. In each frame 50 000 insertions of the test particle (ethylene or ethane) were tried to get adequate statistics on the conformations of the guest-host system. The energy of the system was calculated in each insertion, and an average over these different conformations provided the excess chemical potential, μiex of the inserted species according to eq 14.
+  </p>
+  <p>
+   In the limit of very low pressure, the sorption capacity exhibits a linear dependency on fugacity, which can be expressed according to(15)where KH is the Henry constant and fi and ci are the fugacity and the concentration of sorbed species i in the solid, respectively. The Henry constant of a guest molecule in the ZIF framework can be evaluated by the following expression: (52)(16)where ρZIF is the molecular density of the empty framework, that is, the number of ZIF-8 molecules in the simulation cell over the cell volume.
+  </p>
+  <p>
+   The isosteric heat of adsorption, Q, is given by(17)where K0 is a constant. The isosteric heat of adsorption was obtained by performing Widom insertion calculations at various temperatures. Widom test particle insertions were carried out using GROMACS. (47)
+  </p>
+  <h2>
+   3 Results and Discussion
+  </h2>
+  <h2>
+   3.1 Gas Diffusion
+  </h2>
+  <p>
+   The corrected diffusivities of ethylene and ethane in ZIF-8 at 308 K, for various loadings, were calculated following the methodology and the FF described in previous sections. Given the success of the model in predicting D0 for various gases and reproducing the delicate framework structure upon metal replacement for the case of ZIF-67, (24) we believe that the model is capable to predict the ethylene/ethane separation in both ZIF-8 and ZIF-67.
+  </p>
+  <p>
+   Penetrants with sizes lower than propane (from He to ethane) are regarded as small, with sizes lower than 4.0-4.2 Å, which is very often regarded as the effective size range of ZIF-8. (7) Thus, separation of ethylene/ethane is expected to be subtle. Zhang et al. 's extensive work on transport diffusivities of various gases in ZIF-8 (7) was based on kinetic uptake rate measurements and estimation of the D0 by calculating the thermodynamics factor from sorption isotherms. They reported that ethylene diffuses faster than ethane. In a similar manner, experimental Dt and computational Ds by Zheng et al. for ethylene are higher than for ethane. (54) Chmelik et al. reported measurements by IR microscopy in which ethylene exhibits higher D0 than ethane over a wide range of loadings. (55) Similarly, calculations with TST and IR experiments agree upon the same separation trend. (37) Our simulations agree with these previous findings. Table 1 summarizes literature data and corrected diffusivities calculated in this work. Only selected loadings matching our highest computed values are tabulated and the ratio Dethylene/Dethane is calculated in each case. An extended table with diffusivity values for all of the loadings investigated in our calculations can be found in the ESI (Table S6).
+  </p>
+  <table>
+   <caption>
+    Table 1. Comparative Table of Various Experimental Diffusivities of Ethylene and Ethane and Separation Ratios in ZIF-8, along with Calculated Values from This Work at 308 Ka
+   </caption>
+   <tbody>
+    <tr>
+     <td colspan="1" rowspan="1">
+      source
+     </td>
+     <td colspan="1" rowspan="1">
+      type of diffusion
+     </td>
+     <td colspan="1" rowspan="1">
+      loading (molecule/u.c.)
+     </td>
+     <td colspan="1" rowspan="1">
+      Dethane (10-11 m2/s)
+     </td>
+     <td colspan="1" rowspan="1">
+      Dethylene (10-11 m2/s)
+     </td>
+     <td colspan="1" rowspan="1">
+      separation factor (Dethylene/Dethane)
+     </td>
+    </tr>
+    <tr>
+     <td colspan="1" rowspan="1">
+      this work
+     </td>
+     <td colspan="1" rowspan="1">
+      D0
+     </td>
+     <td colspan="1" rowspan="1">
+      8
+     </td>
+     <td colspan="1" rowspan="1">
+      3.0 (0.1)
+     </td>
+     <td colspan="1" rowspan="1">
+      5.5 (0.9)
+     </td>
+     <td colspan="1" rowspan="1">
+      2.2 (0.3)
+     </td>
+    </tr>
+    <tr>
+     <td colspan="1" rowspan="2">
+      54
+     </td>
+     <td colspan="1" rowspan="1">
+      Ds
+     </td>
+     <td colspan="1" rowspan="1">
+      7
+     </td>
+     <td colspan="1" rowspan="1">
+      4
+     </td>
+     <td colspan="1" rowspan="1">
+      5
+     </td>
+     <td colspan="1" rowspan="1">
+      1.25
+     </td>
+    </tr>
+    <tr>
+     <td colspan="1" rowspan="1">
+      Dt
+     </td>
+     <td colspan="1" rowspan="1">
+      3
+     </td>
+     <td colspan="1" rowspan="1">
+      2.2
+     </td>
+     <td colspan="1" rowspan="1">
+      6.4
+     </td>
+     <td colspan="1" rowspan="1">
+      2.91
+     </td>
+    </tr>
+    <tr>
+     <td colspan="1" rowspan="2">
+      37
+     </td>
+     <td colspan="1" rowspan="1">
+      Ds
+     </td>
+     <td colspan="1" rowspan="1">
+      9
+     </td>
+     <td colspan="1" rowspan="1">
+      0.62
+     </td>
+     <td colspan="1" rowspan="1">
+      2.4
+     </td>
+     <td colspan="1" rowspan="1">
+      3.87
+     </td>
+    </tr>
+    <tr>
+     <td colspan="1" rowspan="1">
+      Dt
+     </td>
+     <td colspan="1" rowspan="1">
+      7
+     </td>
+     <td colspan="1" rowspan="1">
+      1.5
+     </td>
+     <td colspan="1" rowspan="1">
+      1.6
+     </td>
+     <td colspan="1" rowspan="1">
+      1.9
+     </td>
+    </tr>
+    <tr>
+     <td colspan="1" rowspan="1">
+      7
+     </td>
+     <td colspan="1" rowspan="1">
+      D0
+     </td>
+     <td colspan="1" rowspan="1">
+      N/A
+     </td>
+     <td colspan="1" rowspan="1">
+      0.88 (0.30)
+     </td>
+     <td colspan="1" rowspan="1">
+      3.6 (1.6)
+     </td>
+     <td colspan="1" rowspan="1">
+      4.1 (1.1)
+     </td>
+    </tr>
+    <tr>
+     <td colspan="1" rowspan="1">
+      55
+     </td>
+     <td colspan="1" rowspan="1">
+      D0
+     </td>
+     <td colspan="1" rowspan="1">
+      6.5
+     </td>
+     <td colspan="1" rowspan="1">
+      1.6
+     </td>
+     <td colspan="1" rowspan="1">
+      7.5
+     </td>
+     <td colspan="1" rowspan="1">
+      4.7
+     </td>
+    </tr>
+   </tbody>
+   <tfoot>
+    <tr>
+     <td colspan="6">
+      The values in parentheses refer to the statistical uncertainty, for example 3.0 (0.1) means 3.0 ± 0.1.
+     </td>
+    </tr>
+   </tfoot>
+  </table>
+  <p>
+   The separation factor is relatively small, although clearly prominent given its consistency between various literature and this work's results. The investigation was expanded for a wide loading range, where possible fluctuations give a better picture of this size-driven separation. Corrected diffusivities from the simulations as a function of loading are plotted in Figure 4, along with D0 and Ds values from other sources. The calculations for ethane (Figure 4a) demonstrate good agreement with the IRM-measured D0 from Chmelik et al.. (55) falling between computational self-diffusivities from the literature. (37, 54) The same applies to ethylene (Figure 4b), for which our simulations demonstrate diffusivities close to the experimental ones. Differences from the literature's simulations are reasonable, since Verploegh et al. calculated Ds, instead of D0, and they employ a different FF for their ZIF-8 framework. It is clear from all of the data presented in Figure 4 that the ethylene diffusion coefficient is consistently higher than the ethane diffusion coefficient. This is attributed to ethylene being smaller than ethane, so that a mechanism similar to propylene/propane (19, 20) separation is observed, although less pronounced. Moreover, our calculations lie in good agreement with all of the reported findings presented. At this point, the authors want to underline that simulations represent a system closer to ideal, without the complications that may explain discrepancies between similar experiments. For example, a recent work by Zhang et al. reveals the impact of crystals' size on N2 sorption measurements in ZIF-8: different sized crystals exhibit a different structural response upon N2 sorption, which subsequently affects the sorption capacity. Although no similar connection can be made yet between the ethane and ethylene at the studied loadings with ZIF-8's structural deformations, such findings are indicative of the error that measured diffusivities and sorption isotherms are subject of. (56)
+  </p>
+  <p>
+   A comparison of transport diffusivities with values reported in the literature was also performed. Calculation of the transport diffusivity requires accurate estimation of the thermodynamic factor, which in turn is estimated from adsorption calculations.
+  </p>
+  <p>
+   The sorption of ethane and ethylene in ZIF-8 was calculated based on MC simulations. A comparison is carried out with literature data, at 300 K. (4, 57) This comparison proves rather satisfying for both ethane and ethylene, as shown in Figure 5a,b, respectively. Having established a reasonable reliability of the ethylene and ethane sorption isotherms, the curves are fitted by the Sips isotherm (a three-parameter model combining the Langmuir and Freundlich isotherms), (58) whose accuracy has been verified in the extensive work of Maghsoudi around various potential ethylene selective adsorbents. (59) Adsorption isotherms and the fitted parameters can be found in Figure S3 and Table S7 of the ESI accompanying this work, respectively.
+  </p>
+  <p>
+   The transport diffusivities, Dt, as a function of ethylene and ethane loading in ZIF-8 were estimated using the D0 values and the corresponding thermodynamic factors, through eq 6. The comparison shown in Figure 6 reveals that all three sets of data are in reasonable agreement with each other, with the simulations of this work being closer to experimental data.
+  </p>
+  <p>
+   The ZIF-67 framework has a narrower aperture (approximately 3.3 Å) than ZIF-8 (approximately 3.4 Å). In our recently reported experiments and simulations, (24) this fact improves the propylene/propane separation dramatically, through an enhanced size selective mechanism: propane displaying a slightly bigger van der Waals radius than propylene (4.16 and 4.03 Å, (50) respectively) is hindered in this new environment, and the separation improves. It should be pointed out that the van der Waals radius is adopted as representative size scale for all of the molecules investigated in this work, as explained in section 3.2. Along this line, ethylene and ethane sizes scale in a similar manner (3.59 and 3.72 Å, (50) respectively; Figure 7), and a similar separation improvement is expected in ZIF-67. The corrected diffusivities of the two species in ZIF-67 were calculated following the same procedure as for the ZIF-8 case. ZIF-67 proves to be a tighter environment in which both guest molecules experience a decrease in mobility (Figure 8a). However, the decrease in ethylene diffusivity is less pronounced, which leads to an increase of the diffusion selectivity over the entire loading range (Figure 8b).
+  </p>
+  <p>
+   Moreover, this separation enhancement is evident over the entire loading range (Figure 8b). All of the diffusivities and diffusivity ratios values of Figure 8 are tabulated in Table S6 (ESI).
+  </p>
+  <h2>
+   3.2 Separation Mechanism
+  </h2>
+  <p>
+   In order to infer the governing mechanism in ethylene/ethane separation, isosteric heats of adsorption and diffusion energy barriers (activation energy of diffusion) were estimated. Arrhenius plots for both Henry constants and temperature-dependent diffusivities, from which values extracted, can be found in the ESI (Figures S4-S7). The comparison of activation energies of diffusion in Table 2 reveals a higher energy barrier for ethane when compared to ethylene, which justifies the lower ethane diffusivities. The difference between the energy barriers increases in ZIF-67, which is reflected on the larger differences in the diffusivities of the two species (Figure 8a). On the other hand, the isosteric heats of adsorption (Table 3) show that ethylene sorption is not favored compared to ethane sorption when the mixture is in the ZIF-67 framework.
+  </p>
+  <table>
+   <caption>
+    Table 2. Activation Energies of Diffusion of Ethane and Ethylene in ZIF-8 and ZIF-67, as Calculated from MD Simulations
+   </caption>
+   <tbody>
+    <tr>
+     <td colspan="1" rowspan="1">
+     </td>
+     <td colspan="2" rowspan="1">
+      ΔE (kJ/mol)
+     </td>
+    </tr>
+    <tr>
+     <td colspan="1" rowspan="1">
+      molecule
+     </td>
+     <td colspan="1" rowspan="1">
+      ZIF-8
+     </td>
+     <td colspan="1" rowspan="1">
+      ZIF-67
+     </td>
+    </tr>
+    <tr>
+     <td colspan="1" rowspan="1">
+      ethane
+     </td>
+     <td colspan="1" rowspan="1">
+      13
+     </td>
+     <td colspan="1" rowspan="1">
+      17
+     </td>
+    </tr>
+    <tr>
+     <td colspan="1" rowspan="1">
+      ethylene
+     </td>
+     <td colspan="1" rowspan="1">
+      11
+     </td>
+     <td colspan="1" rowspan="1">
+      12
+     </td>
+    </tr>
+   </tbody>
+  </table>
+  <table>
+   <caption>
+    Table 3. Isosteric Heats of Adsorption of Ethane and Ethylene in ZIF-8 and ZIF-67, as Calculated from the Widom Insertion Method
+   </caption>
+   <tbody>
+    <tr>
+     <td colspan="1" rowspan="1">
+     </td>
+     <td colspan="2" rowspan="1">
+      ΔH (kJ/mol)
+     </td>
+    </tr>
+    <tr>
+     <td colspan="1" rowspan="1">
+      molecule
+     </td>
+     <td colspan="1" rowspan="1">
+      ZIF-8
+     </td>
+     <td colspan="1" rowspan="1">
+      ZIF-67
+     </td>
+    </tr>
+    <tr>
+     <td colspan="1" rowspan="1">
+      ethane
+     </td>
+     <td colspan="1" rowspan="1">
+      20
+     </td>
+     <td colspan="1" rowspan="1">
+      21
+     </td>
+    </tr>
+    <tr>
+     <td colspan="1" rowspan="1">
+      ethylene
+     </td>
+     <td colspan="1" rowspan="1">
+      19
+     </td>
+     <td colspan="1" rowspan="1">
+      19
+     </td>
+    </tr>
+   </tbody>
+  </table>
+  <p>
+   The differences in activation energies and in diffusivity ratios of ethylene/ethane in the two frameworks are smaller than these of propylene/propane (24) and make it harder to address the size-selective character of the improvement in ZIF-67. Thus, a more in-depth analysis was performed.
+  </p>
+  <p>
+   The aperture diameters for ZIF-8 and ZIF-67 were calculated using MD simulations for the empty frameworks, based on the procedure proposed by Chokbunpiam et al. (60) The distance r1 between two hydrogen atoms is measured (Figure 9a). A third hydrogen atom is then selected, and the diameter of the circle where these three points lie on is calculated from the following formula:(18)
+  </p>
+  <p>
+   The effective diameter is the geometrical diameter minus the van der Waals diameter of the hydrogen atom, as shown in Figure 9b. A value of 1.2 Å was used for the latter, which is a common choice in literature. (7)
+  </p>
+  <p>
+   Aperture values were measured as a function of time, from the MD trajectories. The outcome is a distribution of sizes, with an almost Gaussian shape, revealing an oscillatory motion of the ligands (Figure 10). Analysis of MD simulation data for the ZIF-8 framework reveals that the aperture oscillation is temperature dependent and oscillation increases as temperature rises (Figure 10(a)). These findings agree with 2H NMR measurements by Kolokov in ZIF-8, where they showed a clear oscillation of the ligands forming the aperture (namely, "saloon door" motion), with pronounced increasing amplitude upon temperature increase. (10)
+  </p>
+  <p>
+   The oscillation of the aperture in ZIF-8 at 308 K results in a size distribution shown in Figure 10a with an average aperture diameter of 3.43 Å, which is very close to what experiments report (3.4 Å at 258 K). (5) ZIF-67 stiffer framework results in an aperture oscillation toward smaller values (Figure 10b) and, subsequently, in smaller average aperture size (3.35 Å), which falls in agreement with the recently reported structural measurements (approximately 3.3 Å at 153 K). (21) The framework stiffness is reflected in our model within the FF parameters for the bond Zn/Co-N and angle N-Zn/Co-N, which in the case of Co are higher. Especially, the K constant of the harmonic angle in the case of Co-ZIF is 3 times higher than in the Zn-ZIF (Tables S1 and S3, in ESI). This inherent stiffness can be attributed to the higher electronegativity of Co over Zn (1.88 and 1.65 of Pauling units, respectively). Our argument is supported by recently reported IR experiments, (22, 23) which showed a down shift of the Co-N bond stretching frequency compared to Zn-N, which can account for the more ionic character of Co and explain the stiffness of the bond.
+  </p>
+  <p>
+   The aperture size is sensitive not only to the temperature changes but to the presence of guest molecules as well. Simulations were carried out where ethane and ethylene molecules were constrained in the center of ZIF-8 and ZIF-67 apertures and their sizes were measured. The simulations consisted of umbrella samplings as described in section 2.3.2 and in the relevant ESI section. The molecule under investigation was placed at the center of the aperture as shown in Figure 11 and executed a restrained motion, allowing for minutely sampling of the aperture region.
+  </p>
+  <p>
+   Both ZIF-8 and ZIF-67 apertures are shifted toward larger values when guest molecules approach, as shown in Figure 10a,b, respectively. Ethane has a higher effect on the aperture size compared to ethylene, since its higher van der Waals radius stretches more the aperture. Moreover, the rigidity of ZIF-67 is reflected on the lower maximum values it can get in all cases; thus, it consists of a higher obstacle for molecules forcing their way through it. Table 4 gathers average aperture sizes for all of the cases described.
+  </p>
+  <table>
+   <caption>
+    Table 4. Mean Aperture Sizes of ZIF-8 and ZIF-67 upon Temperature Elevation and Molecule Exposure
+   </caption>
+   <tbody>
+    <tr>
+     <td colspan="1" rowspan="1">
+     </td>
+     <td colspan="2" rowspan="1">
+      aperture size (Å)
+     </td>
+    </tr>
+    <tr>
+     <td colspan="1" rowspan="1">
+     </td>
+     <td colspan="1" rowspan="1">
+      ZIF-8
+     </td>
+     <td colspan="1" rowspan="1">
+      ZIF-67
+     </td>
+    </tr>
+    <tr>
+     <td colspan="1" rowspan="1">
+      empty (308 K)
+     </td>
+     <td colspan="1" rowspan="1">
+      3.44
+     </td>
+     <td colspan="1" rowspan="1">
+      3.35
+     </td>
+    </tr>
+    <tr>
+     <td colspan="1" rowspan="1">
+      empty (500 K)
+     </td>
+     <td colspan="1" rowspan="1">
+      3.46
+     </td>
+     <td colspan="1" rowspan="1">
+      3.37
+     </td>
+    </tr>
+    <tr>
+     <td colspan="1" rowspan="1">
+      ethane (308 K)
+     </td>
+     <td colspan="1" rowspan="1">
+      3.65
+     </td>
+     <td colspan="1" rowspan="1">
+      3.52
+     </td>
+    </tr>
+    <tr>
+     <td colspan="1" rowspan="1">
+      ethylene (308 K)
+     </td>
+     <td colspan="1" rowspan="1">
+      3.64
+     </td>
+     <td colspan="1" rowspan="1">
+      3.50
+     </td>
+    </tr>
+   </tbody>
+  </table>
+  <p>
+   The opening of the aperture due to the presence of guest molecules has been highlighted in simulations by Haldoupis et al. (18) and Verploegh et al.. (37) while recently Casco et al. reported the first measurements of gas-induced aperture swinging by inelastic neutron scattering. (61) However, this comparative study highlights for the first time the role of metal replacement in aperture stiffness, which can be further exploited toward the tailoring of less/more flexible materials, depending on the desired separation. The aperture opening due to the presence of a molecule can be better perceived through Figure 12, where the ZIF-8 average aperture size varies as an ethane molecule approaches the aperture center. The free energy profile coincides with this change, marking the increase of the aperture resistance as ethane crosses the aperture toward the adjacent cage. The free energy and the aperture sizes as a function of the distance of ethane from the aperture were calculated with the umbrella sampling procedure.
+  </p>
+  <p>
+   Diagrams of diffusivities against the size of diffusing species are often used to pinpoint the penetrant size-dependent character of diffusion and visualize the ZIF-8 effective aperture size range (approximately 4.0-4.2 Å) in which separations are deemed efficient. We believe that a more general representation is needed to account for the possible framework improvements and modifications. The molecular size alone cannot serve the purposes of this representation. For example, in the following simulations, ethylene is a faster penetrant in ZIF-8 than CO2 in ZIF-67, although the latter has smaller van der Waals radius (RCO2 = 3.24 Å, RC2= = 3.59 Å). Diffusion of molecules varying in size, starting from the smallest (He) up to the largest one (n-butane), were simulated in both ZIF-8 and ZIF-67. Their diffusivities were plotted as a function of the molecular size (Figure 13a). The result manifests the limitations of molecular size as a representative scale when used simultaneously for two structures: one molecule size value corresponds to two different diffusivities in the two different framework modifications. The shortcomings of this representation will become more prominent when multiple modifications are plotted, for specific gas separation screening.
+  </p>
+  <p>
+   For a more comprehensive evaluation of the separation mechanism, a new scale is proposed. A molecule's size is compared to the shifted average aperture size (the new size the aperture gets when a molecule passes through it) through the ratio (shifted aperture size)/(molecular size), to which we refer as expansion ratio. It is a measure of the change in the size the aperture undergoes as the gas molecule passes through. Regarding the molecular size, there is a variety of different scales determined and used to estimate the effective size of diffusing molecules, such as kinetic diameters, dk, and Lennard-Jones collision diameters, dLJ, which are extracted from gas viscosity or second virial coefficient data. Both are related to the minimum equilibrium cross-sectional diameters, such as the minimum intermolecular separation between molecules at minimum LJ potential energy. Although they are valuable, they are not always the most suitable for porous solids: the LJ collision diameter does not account for the molecular shape anisotropy on effective molecular size, while kinetic diameters provide an excellent scale only for small molecules, failing to keep a consistent trend for molecules larger than CO2. (62) Moreover, kinetic diameters are available for a limited number of penetrants.
+  </p>
+  <p>
+   For a large variation of sizes and molecular shapes, Zhang et al. (7) incorporated a mix-scale, combining the kinetic diameter, with the van der Waals diameter, proposed by Ruthven. (50) The scale used in this work is the van der Waals radius, which accounts consistently for the small size variations of linear molecules used in the simulations. The diameter is extracted from the van der Waals co-volume, which is calculated from fluid critical parameters. (63) One must be aware that even such a scaling approach is not an adequate measure to represent the fitting of a molecule in a pore, since it is subject to oversimplifications: the aperture measurement employs the crystallographic distance between two hydrogen atoms (Figure 9a) from which the hydrogen radii is subtracted (Figure 9b). In this work, a commonly used hydrogen van der Waals radius (1.2 Å) was considered to ensure a direct comparison of the crystallographic distance between the experimental (7) and the simulated one in this work. A more proper measurement should employ the van der Waals radius incorporated in our FF (1.25 Å), which would result in a narrower observed aperture. Following this line, an investigation of a fitting molecule in the aperture would require an adjusted cross-section radius coming from the σ values of the corresponding guest FFs in use. However, such an approach would not account for the different kinetics of linear molecules of the same cross section diameter and of different lengths. Thus, a slight mixing of scales is employed, to set up a model which, again, serves qualitative purposes and not quantitative.
+  </p>
+  <p>
+   The shift that a molecule applies to ZIF-8 and ZIF-67 aperture size was calculated by umbrella sampling of the molecule placed in the aperture center. All of the resulting aperture size distributions of ZIF-8 and ZIF-67 from the calculations can be found in Figures S8 and S9, respectively. The van der Waals radius for each molecule, along with the corresponding mean aperture size and expansion ratio estimations are tabulated in Table 5. The values reveal a clear and interesting behavior: although smaller molecules shift less the aperture distribution, they achieve a relatively bigger stretch, which is reflected on the higher expansion ratio values, and which accounts for their easier pass through the aperture. Moreover, molecules of the same size achieve a lower stretch on the stiffer, ZIF-67, aperture.
+  </p>
+  <table>
+   <caption>
+    Table 5. Molecular Size (van der Waals Radius), Shifted Aperture Size, and Expansion Ratio Values for Various Guest Molecules in ZIF-8 and ZIF-67
+   </caption>
+   <tbody>
+    <tr>
+     <td colspan="1" rowspan="1">
+     </td>
+     <td colspan="1" rowspan="1">
+     </td>
+     <td colspan="2" rowspan="1">
+      ZIF-8
+     </td>
+     <td colspan="2" rowspan="1">
+      ZIF-67
+     </td>
+    </tr>
+    <tr>
+     <td colspan="1" rowspan="1">
+      guest molecule
+     </td>
+     <td colspan="1" rowspan="1">
+      molecular size (Å)
+     </td>
+     <td colspan="1" rowspan="1">
+      shifted mean aperture size (Å)
+     </td>
+     <td colspan="1" rowspan="1">
+      expansion ratio
+     </td>
+     <td colspan="1" rowspan="1">
+      shifted mean aperture size (Å)
+     </td>
+     <td colspan="1" rowspan="1">
+      expansion ratio
+     </td>
+    </tr>
+    <tr>
+     <td colspan="1" rowspan="1">
+      He
+     </td>
+     <td colspan="1" rowspan="1">
+      2.66
+     </td>
+     <td colspan="1" rowspan="1">
+      3.45
+     </td>
+     <td colspan="1" rowspan="1">
+      1.30
+     </td>
+     <td colspan="1" rowspan="1">
+     </td>
+     <td colspan="1" rowspan="1">
+     </td>
+    </tr>
+    <tr>
+     <td colspan="1" rowspan="1">
+      Ar
+     </td>
+     <td colspan="1" rowspan="1">
+      2.80
+     </td>
+     <td colspan="1" rowspan="1">
+      3.46
+     </td>
+     <td colspan="1" rowspan="1">
+      1.26
+     </td>
+     <td colspan="1" rowspan="1">
+     </td>
+     <td colspan="1" rowspan="1">
+     </td>
+    </tr>
+    <tr>
+     <td colspan="1" rowspan="1">
+      CO2
+     </td>
+     <td colspan="1" rowspan="1">
+      3.24
+     </td>
+     <td colspan="1" rowspan="1">
+      3.53
+     </td>
+     <td colspan="1" rowspan="1">
+      1.07
+     </td>
+     <td colspan="1" rowspan="1">
+      3.40
+     </td>
+     <td colspan="1" rowspan="1">
+      1.05
+     </td>
+    </tr>
+    <tr>
+     <td colspan="1" rowspan="1">
+      ethylene
+     </td>
+     <td colspan="1" rowspan="1">
+      3.59
+     </td>
+     <td colspan="1" rowspan="1">
+      3.64
+     </td>
+     <td colspan="1" rowspan="1">
+      1.01
+     </td>
+     <td colspan="1" rowspan="1">
+      3.50
+     </td>
+     <td colspan="1" rowspan="1">
+      0.98
+     </td>
+    </tr>
+    <tr>
+     <td colspan="1" rowspan="1">
+      ethane
+     </td>
+     <td colspan="1" rowspan="1">
+      3.72
+     </td>
+     <td colspan="1" rowspan="1">
+      3.65
+     </td>
+     <td colspan="1" rowspan="1">
+      0.98
+     </td>
+     <td colspan="1" rowspan="1">
+      3.52
+     </td>
+     <td colspan="1" rowspan="1">
+      0.95
+     </td>
+    </tr>
+    <tr>
+     <td colspan="1" rowspan="1">
+      propylene
+     </td>
+     <td colspan="1" rowspan="1">
+      4.03
+     </td>
+     <td colspan="1" rowspan="1">
+      3.75
+     </td>
+     <td colspan="1" rowspan="1">
+      0.93
+     </td>
+     <td colspan="1" rowspan="1">
+      3.65
+     </td>
+     <td colspan="1" rowspan="1">
+      0.91
+     </td>
+    </tr>
+    <tr>
+     <td colspan="1" rowspan="1">
+      propane
+     </td>
+     <td colspan="1" rowspan="1">
+      4.16
+     </td>
+     <td colspan="1" rowspan="1">
+      3.78
+     </td>
+     <td colspan="1" rowspan="1">
+      0.91
+     </td>
+     <td colspan="1" rowspan="1">
+      3.70
+     </td>
+     <td colspan="1" rowspan="1">
+      0.88
+     </td>
+    </tr>
+    <tr>
+     <td colspan="1" rowspan="1">
+      n-butane
+     </td>
+     <td colspan="1" rowspan="1">
+      4.52
+     </td>
+     <td colspan="1" rowspan="1">
+      3.80
+     </td>
+     <td colspan="1" rowspan="1">
+      0.84
+     </td>
+     <td colspan="1" rowspan="1">
+      3.70
+     </td>
+     <td colspan="1" rowspan="1">
+      0.81
+     </td>
+    </tr>
+   </tbody>
+  </table>
+  <p>
+   Corrected diffusivities for all species in both ZIF-8 and ZIF-67 are plotted against their corresponding expansion ratio in Figure 13b. Aside from propane and propylene, whose diffusivities have been calculated in previous work, (24) corrected diffusivities for the rest of the molecules were calculated, using the methodology presented above. n-Butane is regarded as a slow diffusing molecule in ZIF-8 and in the modified structure, ZIF-67; therefore, the TST diffusivities were calculated with the help of umbrella sampling and then corrected, according to the analysis in section 2.3.2. Cage-to-cage hoping rates, kA→B, and correction factors, κ, as used in eqs 9-13 can be found in Table S8.
+  </p>
+  <p>
+   The results in Figure 13 show a direct relation between diffusivity and the expansion ratio. This direct dependence becomes more lucid when comparing similar-sized molecules in different ZIFs: The expansion ratio defines diffusivity behavior, merging information on molecule size and aperture stiffness. All values of the expansion ratio and the diffusivities of Figure 13, along with available experimental and computational data of the literature can be found in Table S9. The outcome of Figure 13 justifies the selection of such description since it makes possible the comparison of a wide range of molecules in different modifications, given that every molecule corresponds to a different expansion ratio in a different framework. The need for a better understanding of tuning capabilities toward the extension of the separation spectrum of ZIFs has been expressed recently. (4) We share the same opinion and feel that such an analysis will favor the investigation of modifications of ZIF frameworks. In this context, extended calculations on other modifications of the ZIF-8 framework and penetrant sizes are in progress.
+  </p>
+  <h2>
+   4 Conclusions
+  </h2>
+  <p>
+   The sieving capability of the ZIF-8 framework was tested on the ethylene/ethane mixture, whose separation is regarded as highly demanding. A modified framework, ZIF-67, in which Co replaces Zn in the ZIF-8 structure, yields a profound improvement of the framework's efficiency on ethylene/ethane kinetic separation. The metal variation is found to control the aperture size and stiffness, which the simulations show to be the governing mechanism in the separation efficiency. The results reveal a diameter adjustability to molecules of varying size, which differs between ZIF-8 and ZIF-67 and depends on the metal-nitrogen bonding of the frameworks. A study was carried out to elucidate the correlation between penetrant mobility and the pair of molecule size/aperture response. The proposed parameter can serve as a guide for the screening of effective-pore frameworks for different gas separations. We hope that the analysis presented here will benefit the ZIF-8 community and that the understanding of the delicate aperture mechanism will help toward the total selectivity improvement of adsorbents candidates whose high sorption selectivity can be accompanied by enhanced diffusivity separation.
+  </p>
+  <h2>
+   Supporting Information
+  </h2>
+  <h2>
+   Acknowledgment
+  </h2>
+  <h2>
+   References
+  </h2>
+ </div>
+</body>
