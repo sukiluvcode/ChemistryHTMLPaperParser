@@ -53,7 +53,14 @@ class ArticleFunctions:
             article_component_check.abstract = False
         article.abstract = abstract
 
+        # decompose recommendations
+        if tag:=soup.find('section', class_='c-article-recommendations'):
+            tag.decompose()
+        if tag:=soup.find('div', id='recommendations'):
+            tag.decompose()
+
         # --- get sections ---
+        sections = body.find('div', class_='main-content').find_all('section') # main-content, dereference
         content_sections = list()
         for i, section in enumerate(sections):
             try:
@@ -146,17 +153,16 @@ class ArticleFunctions:
             title = '-'.join(title[0].text.split('-')[:-1]).strip()
         article.title = title
 
-        paras = body.find_all('p')
-
         # --- get abstract ---
         abstract = ''
-        for section in paras:
-            try:
-                if 'abstract' in section['class']:
-                    abstract = section.text
-                    abstract = format_text(abstract.strip())
-            except KeyError:
-                pass
+        abs_section = soup.find('div', class_='abstract')
+        try:
+            if 'abstract' in abs_section['class']:
+                abstract = abs_section.text
+                abstract = format_text(abstract.strip())
+                abs_section.decompose()
+        except KeyError:
+            pass
         if not abstract:
             article_component_check.abstract = False
         article.abstract = abstract
@@ -223,7 +229,14 @@ class ArticleFunctions:
             article_component_check.abstract = False
         article.abstract = abstract
 
+        # decompose recommendations
+        if tag:=soup.find('section', class_='c-article-recommendations'):
+            tag.decompose()
+        if tag:=soup.find('div', id='recommendations'):
+            tag.decompose()
+
         # --- get sections ---
+        sections = body.find('div', class_='main-content').find_all('section') # main-content, dereference
         content_sections = list()
         for i, section in enumerate(sections):
             try:
